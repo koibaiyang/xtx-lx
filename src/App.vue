@@ -2,7 +2,8 @@
 </script>
 
 <template>
-  <el-button type="primary">Primary</el-button>
+  <!-- 一级路由占位符 -->
+  <router-view></router-view>
 </template>
 
 <style scoped>
