@@ -1,12 +1,14 @@
-import './assets/main.css'
+
+// 引入初始化样式 
+import '@/styles/common.scss'
 
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 
-import { test } from '@/apis/testAPI.js'
-test().then(res => {
-  console.log(res);
-})
+// import { test } from '@/apis/testAPI.js'
+// test().then(res => {
+//   console.log(res);
+// })
 
 import App from './App.vue'
 import router from './router'
