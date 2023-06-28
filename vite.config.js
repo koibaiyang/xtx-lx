@@ -8,6 +8,8 @@ import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 
+
+
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
@@ -15,13 +17,25 @@ export default defineConfig({
     AutoImport({
       resolvers: [ElementPlusResolver()],
     }),
+    // 配置 elementPlus 采用 sass样式配色系统
     Components({
-      resolvers: [ElementPlusResolver()],
+      resolvers: [ElementPlusResolver({
+        importStyle: "sass",
+      })],
     }),
   ],
+
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))
     }
-  }
+  },
+  // 自动导入定制化样式文件进行样式覆盖
+  css: {
+    preprocessorOptions: {
+      scss: {
+        additionalData: `@use "@/styles/element/index.scss" as *;`,
+      },
+    },
+  },
 })
