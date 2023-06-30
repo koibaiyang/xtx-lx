@@ -19,9 +19,10 @@ onMounted(() => getHotList())
     <ul class="goods-list">
       <li v-for="item in hotList" :key="item.id">
         <RouterLink to="/">
-          <img :src="item.picture" alt="" />
-          <p class="name">{{ item.name }}</p>
-          <p class="price">&yen;{{ item.price }}</p>
+          <img v-imgSrc="item.picture" alt="" />
+          <p class="name">{{item.title}}</p>
+          <p class="desc"> {{ item.alt }} </p>
+          <!-- <p class="price">&yen;{{ item.price }}</p> -->
         </RouterLink>
       </li>
     </ul>
@@ -37,7 +38,7 @@ onMounted(() => getHotList())
 
   li {
     width: 306px;
-    height: 406px;
+    height: 380px;
 
     background: #f0f9f4;
     transition: all 0.5s;
@@ -53,16 +54,20 @@ onMounted(() => getHotList())
     }
 
     p {
-      font-size: 22px;
+      font-size: 18px;
       padding-top: 12px;
       text-align: center;
       text-overflow: ellipsis;
       overflow: hidden;
       white-space: nowrap;
+      font-weight: 700;
     }
 
-    .price {
-      color: $priceColor;
+    .desc {
+      padding: 5px 0;
+      color: #aaa;
+      font-size: 16px;
+      font-weight: 400;
     }
   }
 }

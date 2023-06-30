@@ -1,6 +1,8 @@
 
 // 引入初始化样式 
 import '@/styles/common.scss'
+import { useIntersectionObserver } from '@vueuse/core'
+
 
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
@@ -19,3 +21,20 @@ app.use(createPinia())
 app.use(router)
 
 app.mount('#app')
+
+
+// 自定义指令和vueUse实现图片懒加载功能
+app.directive('imgSrc', (el, binding) => {
+
+   useIntersectionObserver(
+      el,
+      ([{ isIntersecting }], ) => {
+        
+        if(isIntersecting) {
+          // console.log(111);
+          el.src = binding.value
+        }
+        
+      },
+    )
+})
