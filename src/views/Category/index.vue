@@ -1,39 +1,10 @@
 <script setup>
-import { getCategoryAPI } from '@/apis/catejory.js'
-import { onMounted, ref } from 'vue'
-import { useRoute, onBeforeRouteUpdate } from 'vue-router'
-import { getBannerAPI } from '@/apis/homeBannerAPI.js'
 import GoodsItem from '../Home/components/GoodsItem.vue'
+import { useBanner } from './composables/useBanner.js'
+import { useCategory } from './composables/useCategory.js'
 
-// 面包屑
-const route = useRoute()
-const categoryData = ref({})
-const getCategory = async (id = route.params.id) => {
-  const res = await getCategoryAPI(id)
-  // console.log(res)
-  categoryData.value = res.data.result
-  // console.log(categoryData)
-}
-onMounted(() => getCategory())
-
-// 路由缓存问题解决方法
-onBeforeRouteUpdate((to) => {
-  // console.log('router更新了')
-  // console.log(to)
-  getCategory(to.params.id)
-})
-
-// 轮播图
-const bannerList = ref([])
-const getBanner = async () => {
-  const res = await getBannerAPI(2)
-  // console.log(res)
-  bannerList.value = res.data.result
-  // console.log(bannerList)
-}
-onMounted(async () => {
-  getBanner()
-})
+const { bannerList } = useBanner()
+const { categoryData } = useCategory()
 </script>
 
 <template>
