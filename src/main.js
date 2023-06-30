@@ -1,11 +1,12 @@
 
 // 引入初始化样式 
 import '@/styles/common.scss'
-import { useIntersectionObserver } from '@vueuse/core'
-
 
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
+
+// 导入图片懒加载插件
+import { imgLazyPlugin } from '@/directives/index.js'
 
 // import { test } from '@/apis/testAPI.js'
 // test().then(res => {
@@ -19,22 +20,9 @@ const app = createApp(App)
 
 app.use(createPinia())
 app.use(router)
+app.use(imgLazyPlugin)
 
 app.mount('#app')
 
 
-// 自定义指令和vueUse实现图片懒加载功能
-app.directive('imgSrc', (el, binding) => {
 
-   useIntersectionObserver(
-      el,
-      ([{ isIntersecting }], ) => {
-        
-        if(isIntersecting) {
-          // console.log(111);
-          el.src = binding.value
-        }
-        
-      },
-    )
-})

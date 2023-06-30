@@ -17,3 +17,9 @@ export function getHotListAPI () {
     url: '/home/hot'
   })
 }
+
+export function getGoodsAPI () {
+  return http1({
+    url: '/home/goods'
+  })
+}
