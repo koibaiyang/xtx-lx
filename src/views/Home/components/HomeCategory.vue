@@ -37,7 +37,7 @@ const categoryStore = useCategpryStore()
 .home-category {
   width: 250px;
   height: 500px;
-  background: rgba(0, 0, 0, 0.8);
+  background: rgba(0, 0, 0, 0.65);
   position: relative;
   z-index: 99;
 

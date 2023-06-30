@@ -5,3 +5,15 @@ export function getBannerAPI () {
     url: '/home/banner'
   })  
 } 
+
+export function getNewListAPI () {
+  return http1({
+    url: '/home/new'
+  })
+}
+
+export function getHotListAPI () {
+  return http1({
+    url: '/home/hot'
+  })
+}
