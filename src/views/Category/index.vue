@@ -3,6 +3,7 @@ import { getCategoryAPI } from '@/apis/catejory.js'
 import { onMounted, ref } from 'vue'
 import { useRoute } from 'vue-router'
 import { getBannerAPI } from '@/apis/homeBannerAPI.js'
+import GoodsItem from '../Home/components/GoodsItem.vue'
 
 // 面包屑
 const route = useRoute()
@@ -14,6 +15,7 @@ const getCategory = async () => {
   // console.log(categoryData)
 }
 onMounted(() => getCategory())
+
 // 轮播图
 const bannerList = ref([])
 const getBanner = async () => {
@@ -37,19 +39,42 @@ onMounted(async () => {
           <el-breadcrumb-item>{{categoryData.name}}</el-breadcrumb-item>
         </el-breadcrumb>
       </div>
-    </div>
-    <div class="banner">
-      <div class="block text-center">
-        <el-carousel height="500px">
-          <el-carousel-item v-for="item in bannerList" :key="item.id">
-            <a href="javascript:;">
-              <img :src="item.imgUrl" alt="">
-            </a>
-          </el-carousel-item>
-        </el-carousel>
+      <!-- 轮播图 -->
+      <div class="banner">
+        <div class="block text-center">
+          <el-carousel height="500px">
+            <el-carousel-item v-for="item in bannerList" :key="item.id">
+              <a href="javascript:;">
+                <img :src="item.imgUrl" alt="">
+              </a>
+            </el-carousel-item>
+          </el-carousel>
+        </div>
+      </div>
+      <!-- 商品列表 -->
+      <div class="sub-list">
+        <h3>全部分类</h3>
+        <ul>
+          <li v-for="i in categoryData.children" :key="i.id">
+            <RouterLink to="/">
+              <img :src="i.picture" />
+              <p>{{ i.name }}</p>
+            </RouterLink>
+          </li>
+        </ul>
+      </div>
+      <div class="ref-goods" v-for="item in categoryData.children" :key="item.id">
+        <div class="head">
+          <h3>- {{ item.name }}-</h3>
+        </div>
+        <div class="body">
+          <GoodsItem v-for="good in item.goods" :good="good" :key="good.id" />
+        </div>
       </div>
     </div>
+
   </div>
+
 </template>
 
 
