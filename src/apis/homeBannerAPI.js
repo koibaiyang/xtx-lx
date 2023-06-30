@@ -1,8 +1,12 @@
 import http1 from '@/utils/request.js'
 
-export function getBannerAPI () {
+export function getBannerAPI (n = 1) {
+  const distributionSite = n
   return http1({
-    url: '/home/banner'
+    url: '/home/banner',
+    params: {
+      distributionSite
+    }
   })  
 } 
 
