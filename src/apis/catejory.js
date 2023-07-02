@@ -15,3 +15,11 @@ export const getCategoryFilterAPI = (id) => {
     }
   })
 }
+
+export const getSubCategoryAPI = (data) => {
+  return http1({
+    url:'/category/goods/temporary',
+    method:'POST',
+    data
+  })
+}

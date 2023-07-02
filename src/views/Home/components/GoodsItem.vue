@@ -5,6 +5,7 @@ defineProps({
     default: () => {},
   },
 })
+// console.log(good)
 </script>
 
 <template>
