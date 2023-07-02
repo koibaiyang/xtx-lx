@@ -6,3 +6,12 @@ export function getCategoryAPI(id) {
     params: {id}
   })
 }
+
+export const getCategoryFilterAPI = (id) => {
+  return http1({
+    url:'/category/sub/filter',
+    params:{
+      id
+    }
+  })
+}
