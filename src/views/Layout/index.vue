@@ -19,4 +19,7 @@ onMounted(() => {
   <!-- <RouterView :key="$route.fullPath" /> -->
   <RouterView></RouterView>
   <LayoutFooter />
+  <!-- 返回顶部 -->
+  <!-- <el-backtop :bottom="100" > -->
+  <el-backtop :right="100" :bottom="100" visibility-height="350" />
 </template>
