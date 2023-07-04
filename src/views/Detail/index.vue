@@ -3,6 +3,7 @@ import { getGoodsDetailAPI } from '@/apis/goodsDetail.js'
 import { onMounted, ref } from 'vue'
 import { useRoute } from 'vue-router'
 import DetailHot from './components/DetailHot.vue'
+import ImgChange from '@/components/ImgChange/index.vue'
 
 const goodsDetail = ref({})
 const route = useRoute()
@@ -34,7 +35,7 @@ onMounted(() => getGoodsDetail())
           <div class="goods-info">
             <div class="media">
               <!-- 图片预览区 -->
-
+              <ImgChange></ImgChange>
               <!-- 统计数量 -->
               <ul class="goods-sales">
                 <li>
