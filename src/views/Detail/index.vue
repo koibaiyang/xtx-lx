@@ -3,7 +3,8 @@ import { getGoodsDetailAPI } from '@/apis/goodsDetail.js'
 import { onMounted, ref } from 'vue'
 import { useRoute } from 'vue-router'
 import DetailHot from './components/DetailHot.vue'
-import ImgChange from '@/components/ImgChange/index.vue'
+// import ImgChange from '@/components/ImgChange/index.vue'
+// import XtxSku from '@/components/XtxSku/index.vue'
 
 const goodsDetail = ref({})
 const route = useRoute()
@@ -14,6 +15,10 @@ const getGoodsDetail = async () => {
   // console.log(goodsDetail)
 }
 onMounted(() => getGoodsDetail())
+
+const getSku = (sku) => {
+  console.log(sku)
+}
 </script>
 
 <template>
@@ -35,7 +40,7 @@ onMounted(() => getGoodsDetail())
           <div class="goods-info">
             <div class="media">
               <!-- 图片预览区 -->
-              <ImgChange></ImgChange>
+              <ImgChange :imageList="goodsDetail.mainPictures"></ImgChange>
               <!-- 统计数量 -->
               <ul class="goods-sales">
                 <li>
@@ -84,6 +89,7 @@ onMounted(() => getGoodsDetail())
                 </dl>
               </div>
               <!-- sku组件 -->
+              <XtxSku :goods="goodsDetail" @change="getSku"></XtxSku>
 
               <!-- 数据组件 -->
 
