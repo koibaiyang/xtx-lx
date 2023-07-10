@@ -7,8 +7,8 @@ import { useUserStore } from '@/stores/user.js'
 
 const userStore = useUserStore()
 const form = ref({
-  account: '',
-  password: '',
+  account: 'heima282',
+  password: 'hm#qd@23!',
   agree: true,
 })
 const rules = {
@@ -43,7 +43,7 @@ const doLogin = () => {
       // TO DO 表单提交事
       const { account, password } = form.value
       userStore.getUserInfo({ account, password })
-      console.log(userStore.userState)
+      // console.log(userStore.userState)
       ElMessage({
         message: '登录成功',
         type: 'success',

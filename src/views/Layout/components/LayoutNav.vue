@@ -1,14 +1,26 @@
 <script setup>
+import { useUserStore } from '@/stores/user.js'
+import { storeToRefs } from 'pinia'
+import { useRouter } from 'vue-router'
+
+const userStore = useUserStore()
+const { userInfo } = storeToRefs(userStore)
+
+const router = useRouter()
+const confirm = () => {
+  userStore.clearInfo()
+  router.push('/login')
+}
 </script>
 
 <template>
   <nav class="app-topnav">
     <div class="container">
       <ul>
-        <template v-if="false">
-          <li><a href="javascript:;"><i class="iconfont icon-user"></i>周杰伦</a></li>
+        <template v-if="userInfo?.token">
+          <li><a href="javascript:;"><i class="iconfont icon-user"></i>{{userInfo.account}}</a></li>
           <li>
-            <el-popconfirm title="确认退出吗?" confirm-button-text="确认" cancel-button-text="取消">
+            <el-popconfirm @confirm="confirm" title="确认退出吗?" confirm-button-text="确认" cancel-button-text="取消">
               <template #reference>
                 <a href="javascript:;">退出登录</a>
               </template>
