@@ -1,9 +1,12 @@
 import axios from "axios";
+import { ElMessage } from 'element-plus'
+import 'element-plus/es/components/message/style/css'
 
 const http1 = axios.create({
   baseURL: 'http://pcapi-xiaotuxian-front-devtest.itheima.net',
   timeout: 5000
 })
+// let flag = true
 
 // 添加请求拦截器
 http1.interceptors.request.use(function (config) {
@@ -22,6 +25,23 @@ http1.interceptors.response.use(function (response) {
 }, function (error) {
   // 超出 2xx 范围的状态码都会触发该函数。
   // 对响应错误做点什么
+  ElMessage({
+    type: 'warning',
+    message:error.response.data.message
+  })
+  // if(flag){
+  //   flag = false
+  //   setTimeout(function(){
+  //     ElMessage({
+  //       type: 'warning',
+  //       message:error.response.data.message
+  //     })
+  //     console.log(111);
+  //     flag = true
+  //   },3000)
+  // }
+  
+  
   return Promise.reject(error);
 });
 

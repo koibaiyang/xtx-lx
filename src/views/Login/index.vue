@@ -1,5 +1,11 @@
 <script setup>
 import { ref } from 'vue'
+import { ElMessage } from 'element-plus'
+import 'element-plus/es/components/message/style/css'
+import { useRouter } from 'vue-router'
+import { useUserStore } from '@/stores/user.js'
+
+const userStore = useUserStore()
 const form = ref({
   account: '',
   password: '',
@@ -9,13 +15,17 @@ const rules = {
   account: [{ required: true, message: '请输入用户名', trigger: 'blur' }], //验证用户名
   password: [
     { required: true, message: '请输入密码', trigger: 'blur' },
-    { min: 6, max: 12, message: '请输入3-5个字符', trigger: 'blur' },
+    { min: 6, max: 12, message: '请输入6-12个字符', trigger: 'blur' },
   ], //验证密码
   agree: [
     {
       validator: (rule, value, callback) => {
-        console.log(value)
-        if (!value) {
+        // if (!value) {
+        //   callback(new Error('请勾选协议'))
+        // }
+        if (value) {
+          callback()
+        } else {
           callback(new Error('请勾选协议'))
         }
       },
@@ -23,11 +33,22 @@ const rules = {
   ], //验证许可
 }
 // 登录校验全部规则
+
 const formRef = ref(null)
+const router = useRouter()
 const doLogin = () => {
-  formRef.value.validate((isValid) => {
-    if (!isValid) {
-      // TO DO 表单提交事件
+  formRef.value.validate(async (valid) => {
+    // console.log(valid)
+    if (valid) {
+      // TO DO 表单提交事
+      const { account, password } = form.value
+      userStore.getUserInfo({ account, password })
+      console.log(userStore.userState)
+      ElMessage({
+        message: '登录成功',
+        type: 'success',
+      })
+      router.replace({ path: '/' })
     }
   })
 }
