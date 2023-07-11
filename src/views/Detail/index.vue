@@ -39,7 +39,7 @@ const addCart = () => {
     })
     cartStore.addCount({
       id: goodsDetail.value.id,
-      name: goodsDetail.value.name,
+      name: goodsDetail.value?.name,
       picture: goodsDetail.value.mainPictures[0],
       price: goodsDetail.value.price,
       count: count.value,
@@ -62,11 +62,11 @@ const addCart = () => {
       <div class="bread-container">
         <el-breadcrumb separator=">">
           <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-          <el-breadcrumb-item :to="{ path: `/category/:${goodsDetail.categories[0].id}` }">{{goodsDetail.categories[0].name}}
+          <el-breadcrumb-item :to="{ path: `/category/:${goodsDetail.categories[0].id}` }">{{goodsDetail.categories[0]?.name}}
           </el-breadcrumb-item>
-          <el-breadcrumb-item :to="{ path: `/category/sub/:${goodsDetail.categories[1].id}` }">{{goodsDetail.categories[1].name}}
+          <el-breadcrumb-item :to="{ path: `/category/sub/:${goodsDetail.categories[1].id}` }">{{goodsDetail.categories[1]?.name}}
           </el-breadcrumb-item>
-          <el-breadcrumb-item>{{goodsDetail.name}}</el-breadcrumb-item>
+          <el-breadcrumb-item>{{goodsDetail?.name}}</el-breadcrumb-item>
         </el-breadcrumb>
       </div>
       <!-- 商品信息 -->
@@ -95,14 +95,14 @@ const addCart = () => {
                 </li>
                 <li>
                   <p>品牌信息</p>
-                  <p>{{goodsDetail.brand.name}}</p>
+                  <p>{{goodsDetail.brand?.name}}</p>
                   <p><i class="iconfont icon-dynamic-filling"></i>品牌主页</p>
                 </li>
               </ul>
             </div>
             <div class="spec">
               <!-- 商品信息区 -->
-              <p class="g-name"> {{goodsDetail.name}} </p>
+              <p class="g-name"> {{goodsDetail?.name}} </p>
               <p class="g-desc">{{goodsDetail.desc}} </p>
               <p class="g-price">
                 <span>{{goodsDetail.oldPrice}}</span>
@@ -149,8 +149,8 @@ const addCart = () => {
                   <!-- 属性 -->
                   <ul class="attrs">
                     <li v-for="item in goodsDetail.details.properties" :key="item.value">
-                      <span class="dt">{{item.name}}</span>
-                      <span class="dd">{{item.name}}</span>
+                      <span class="dt">{{item?.name}}</span>
+                      <span class="dd">{{item?.name}}</span>
                     </li>
                   </ul>
                   <!-- 图片 -->
