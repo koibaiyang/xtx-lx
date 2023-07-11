@@ -4,6 +4,7 @@ import '@/styles/common.scss'
 
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
+import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
 
 // 导入图片懒加载插件
 import { imgLazyPlugin } from '@/directives/index.js'
@@ -21,7 +22,9 @@ import router from './router'
 
 const app = createApp(App)
 
-app.use(createPinia())
+const pinia = createPinia()
+pinia.use(piniaPluginPersistedstate)
+app.use(pinia)
 app.use(router)
 app.use(imgLazyPlugin)
 app.use(xtxPlugin)

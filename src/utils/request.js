@@ -40,10 +40,10 @@ http1.interceptors.response.use(function (response) {
   // 对响应错误做点什么
   ElMessage({
     type: 'warning',
-    message:error.response.data.message
+    message:error.response?.data.message
   })
   const userStore = useUserStore()
-  if(error.response.status === 401){
+  if(error.response?.status === 401){
     userStore.clearInfo()
     router.push('/login')
   }
