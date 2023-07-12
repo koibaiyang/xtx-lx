@@ -1,6 +1,11 @@
 <script setup>
-import { getCheckoutAPI } from '@/apis/checkout.js'
+import { getCheckoutAPI, createOrderAPI } from '@/apis/checkout.js'
 import { onMounted, ref } from 'vue'
+import { useRouter } from 'vue-router'
+import { useCartStore } from '@/stores/cartStore.js'
+
+const cartStore = useCartStore()
+const router = useRouter()
 
 const checkInfo = ref({}) // 订单对象
 const curAddress = ref({}) // 地址对象
@@ -13,6 +18,45 @@ const getCheckout = async () => {
   curAddress.value = item
 }
 onMounted(() => getCheckout())
+
+// 模态框显示
+const dialogVisible = ref(false)
+
+// 切换地址
+const activeAddress = ref({})
+const active = (item) => {
+  activeAddress.value = item
+}
+const confirmActive = () => {
+  curAddress.value = activeAddress.value
+  dialogVisible.value = false
+  activeAddress.value = {}
+}
+
+// 提交订单
+const createOrder = async () => {
+  const res = await createOrderAPI({
+    deliveryTimeType: 1,
+    payType: 1,
+    payChannel: 1,
+    buyerMessage: '',
+    goods: checkInfo.value.goods.map((item) => {
+      return {
+        skuId: item.skuId,
+        count: item.count,
+      }
+    }),
+    addressId: curAddress.value.id,
+  })
+  console.log(res)
+  router.push({
+    path: '/pay',
+    query: {
+      id: res.data.result.id,
+    },
+  })
+  cartStore.updateList()
+}
 </script>
 
 <template>
@@ -32,7 +76,7 @@ onMounted(() => getCheckout())
               </ul>
             </div>
             <div class="action">
-              <el-button size="large" @click="toggleFlag = true">切换地址</el-button>
+              <el-button size="large" @click="dialogVisible = true">切换地址</el-button>
               <el-button size="large" @click="addFlag = true">添加地址</el-button>
             </div>
           </div>
@@ -107,12 +151,29 @@ onMounted(() => getCheckout())
         </div>
         <!-- 提交订单 -->
         <div class="submit">
-          <el-button type="primary" size="large">提交订单</el-button>
+          <el-button type="primary" size="large" @click="createOrder">提交订单</el-button>
         </div>
       </div>
     </div>
   </div>
   <!-- 切换地址 -->
+  <el-dialog title="切换收货地址" width="30%" center v-model="dialogVisible">
+    <div class="addressWrapper">
+      <div class="text item" :class="{active: item.id === activeAddress.id}" @click="active(item)" v-for="item in checkInfo.userAddresses" :key="item.id">
+        <ul>
+          <li><span>收<i />货<i />人：</span>{{ item.receiver }} </li>
+          <li><span>联系方式：</span>{{ item.contact }}</li>
+          <li><span>收货地址：</span>{{ item.fullLocation + item.address }}</li>
+        </ul>
+      </div>
+    </div>
+    <template #footer>
+      <span class="dialog-footer">
+        <el-button>取消</el-button>
+        <el-button type="primary" @click="confirmActive">确定</el-button>
+      </span>
+    </template>
+  </el-dialog>
   <!-- 添加地址 -->
 </template>
 

@@ -6,14 +6,15 @@ import {mergeCart} from '@/apis/cart.js'
 
 export const useUserStore = defineStore('user', ()=>{
   const cartStore = useCartStore()
-  const info = JSON.parse(localStorage.getItem('user'))
-  const userInfo = ref(info)
+  // const info = JSON.parse(localStorage.getItem('user'))
+  // const userInfo = ref(info)
+  const userInfo = ref({})
   const getUserInfo = async ({account, password})=>{
     const res = await doLoginAPI({account, password})
     // console.log(userInfo);
     userInfo.value = res.data.result
-    const data = res.data.result
-    localStorage.setItem('user',JSON.stringify(data))
+    // const data = res.data.result
+    // localStorage.setItem('user',JSON?.stringify(data))
     await mergeCart(cartStore.cartList.map(item=>{
       return {
         skuId: item.skuId,
@@ -34,4 +35,6 @@ export const useUserStore = defineStore('user', ()=>{
     clearInfo
   }
 },
-)
+{
+  persist: true,
+})

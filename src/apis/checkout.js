@@ -5,3 +5,11 @@ export const getCheckoutAPI = ()=>{
     url: '/member/order/pre'
   })
 }
+
+export const createOrderAPI = (data)=>{
+  return http1({
+    url: '/member/order',
+    method: 'POST',
+    data,
+  })
+}
