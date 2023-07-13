@@ -24,7 +24,8 @@ onMounted(() => {
         <p>支付金额：<span>¥{{payInfo.payMoney?.toFixed(2)}}</span></p>
         <div class="btn">
           <el-button type="primary" style="margin-right:20px">查看订单</el-button>
-          <el-button>进入首页</el-button>
+          <router-link to="/"><el-button>进入首页</el-button></router-link>
+
         </div>
         <p class="alert">
           <span class="iconfont icon-tip"></span>

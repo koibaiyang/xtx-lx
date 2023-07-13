@@ -5,7 +5,7 @@ import { storeToRefs } from 'pinia'
 const cartStore = useCartStore()
 const { cartList, sumCount, checkPrice, checkSum, isAll } =
   storeToRefs(cartStore)
-const { delCount, isCheck } = cartStore
+const { delCount, isCheck, submit } = cartStore
 
 const checkAll = (checked) => {
   isCheck(checked)
@@ -84,7 +84,7 @@ const checkAll = (checked) => {
           <span class="red">¥ {{checkPrice}} </span>
         </div>
         <div class="total">
-          <el-button size="large" type="primary" @click="$router.push('/checkout')">下单结算</el-button>
+          <el-button size="large" type="primary" @click="submit">下单结算</el-button>
         </div>
       </div>
     </div>

@@ -2,6 +2,10 @@ import { defineStore } from "pinia";
 import { computed, ref } from "vue";
 import {useUserStore} from './user.js'
 import {addCart,getCart,delCart} from '@/apis/cart.js'
+import {useRouter} from 'vue-router'
+import 'element-plus/es/components/message/style/css'
+import { ElMessage } from 'element-plus'
+
 
 export const useCartStore = defineStore('cart',()=>{
   // 购物车列表
@@ -56,6 +60,19 @@ export const useCartStore = defineStore('cart',()=>{
   const isAll = computed(() => {return cartList.value.every((item) => item.selected === true)})
   // 全选控制单选
   const isCheck = (checked)=>{ cartList.value.forEach(item=>{item.selected = checked})}
+  // 下单结算
+  const router = useRouter()
+  const submit = ()=>{
+    console.log(1);
+    if(userStore.userInfo.token){
+      console.log(2);
+      router.push('/checkout')
+    }else{
+      ElMessage.error('请先登录')
+      console.log(3);
+    }
+    
+  }
   return {
     cartList,
     addCount,
@@ -67,7 +84,8 @@ export const useCartStore = defineStore('cart',()=>{
     isAll,
     isCheck,
     clearList,
-    updateList
+    updateList,
+    submit
   }
 },
 {
