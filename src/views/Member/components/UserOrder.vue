@@ -1,4 +1,6 @@
 <script setup>
+import { getUserOrder } from '@/apis/order.js'
+import { onMounted, ref } from 'vue'
 // tab列表
 const tabTypes = [
   { name: 'all', label: '全部订单' },
@@ -10,12 +12,44 @@ const tabTypes = [
   { name: 'cancel', label: '已取消' },
 ]
 // 订单列表
-const orderList = []
+const orderList = ref([])
+const total = ref(0)
+const params = ref({
+  orderState: 0,
+  page: 1,
+  pageSize: 2,
+})
+const userOrder = async () => {
+  const res = await getUserOrder(params.value)
+  orderList.value = res.data.result.items
+  total.value = res.data.result.counts
+}
+onMounted(() => userOrder())
+const change = (TabPaneName) => {
+  params.value.orderState = TabPaneName
+  userOrder()
+}
+const sizeChange = (num) => {
+  params.value.page = num
+  userOrder()
+}
+const formatState = (num) => {
+  const obj = {
+    0: '全部订单',
+    1: '待付款',
+    2: '待发货',
+    3: '待收货',
+    4: '待评价',
+    5: '已完成',
+    6: '已取消',
+  }
+  return obj[num]
+}
 </script>
 
 <template>
   <div class="order-container">
-    <el-tabs>
+    <el-tabs @tab-change="change">
       <!-- tab切换 -->
       <el-tab-pane v-for="item in tabTypes" :key="item.name" :label="item.label" />
 
@@ -56,7 +90,7 @@ const orderList = []
                 </ul>
               </div>
               <div class="column state">
-                <p>{{ order.orderState }}</p>
+                <p>{{ formatState(order.orderState) }}</p>
                 <p v-if="order.orderState === 3">
                   <a href="javascript:;" class="green">查看物流</a>
                 </p>
@@ -92,7 +126,7 @@ const orderList = []
           </div>
           <!-- 分页 -->
           <div class="pagination-container">
-            <el-pagination background layout="prev, pager, next" />
+            <el-pagination background layout="prev, pager, next" :total="total" :page-size="params.pageSize" @current-change="sizeChange" />
           </div>
         </div>
       </div>
