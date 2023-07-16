@@ -7,6 +7,7 @@ const getBanner = async () => {
   // console.log(res)
   bannerList.value = res.data.result
   // console.log(bannerList)
+  console.log(bannerList)
 }
 onMounted(async () => {
   getBanner()
